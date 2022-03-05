@@ -1,4 +1,4 @@
-package com.example.patterns.creational.builder
+package com.example.designpatterns.creational.builder
 
 /**
  * @author Evdokimov on 04.03.2022.
