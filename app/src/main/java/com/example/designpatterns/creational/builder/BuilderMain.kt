@@ -7,7 +7,6 @@ package com.example.designpatterns.creational.builder
  *
  * Не понимаю зачем нужен в Kotlin при наличии дефолтных значений в конструкторе.
  */
-
 fun main() {
     val house = HouseBuilder()
         .setWalls("Some walls producer")
