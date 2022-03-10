@@ -10,9 +10,9 @@ package com.example.designpatterns.creational.builder
 
 fun main() {
     val house = HouseBuilder()
-        .buildWalls("Some walls producer")
-        .buildDoor("Some doors producer")
-        .buildWindow("Some window producer")
+        .setWalls("Some walls producer")
+        .setDoor("Some doors producer")
+        .setWindow("Some window producer")
         .build()
 
     println(house)
