@@ -8,4 +8,6 @@ class TextDoc: File{
     override fun showType() {
         println("Текстовый документ")
     }
+
+    override fun toString(): String = "TextDoc"
 }

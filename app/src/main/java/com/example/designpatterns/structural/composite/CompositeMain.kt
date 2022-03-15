@@ -36,5 +36,9 @@ fun main() {
     mainFolder.addComponent(folder2)
     mainFolder.addComponent(textDoc3)
 
+    println(mainFolder.children)
     mainFolder.showType()
+
+    mainFolder.removeComponent(folder2)
+    println(mainFolder.children)
 }

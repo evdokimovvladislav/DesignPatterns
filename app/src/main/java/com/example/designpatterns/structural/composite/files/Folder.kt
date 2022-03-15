@@ -5,6 +5,9 @@ package com.example.designpatterns.structural.composite.files
  */
 class Folder : File {
 
+    val children: List<File>
+        get() = components
+
     private val components = arrayListOf<File>()
 
     override fun showType() {
@@ -13,7 +16,13 @@ class Folder : File {
         }
     }
 
+    override fun toString(): String = "Folder"
+
     fun addComponent(file: File) {
         components.add(file)
+    }
+
+    fun removeComponent(file: File) {
+        components.remove(file)
     }
 }

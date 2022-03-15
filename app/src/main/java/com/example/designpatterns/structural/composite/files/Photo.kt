@@ -8,4 +8,6 @@ class Photo: File {
     override fun showType() {
         println("Фотография")
     }
+
+    override fun toString(): String = "Photo"
 }
