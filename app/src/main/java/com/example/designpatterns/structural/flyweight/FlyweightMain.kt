@@ -9,19 +9,28 @@ import com.example.designpatterns.structural.flyweight.trees.Tree
  * таких нет, то создает их
  */
 fun main() {
-    val treeFactory = TreeFactory()
+    val forest = makeForest()
 
-    val forest = mutableListOf<Tree>()
+    val planter = TreePlanter(forest, -1 to 2, 0 to 2)
+    planter.plant()
+}
 
-    forest.add(treeFactory.getTree(TreeType.OAK))
-    forest.add(treeFactory.getTree(TreeType.PINE))
-    forest.add(treeFactory.getTree(TreeType.SPRUCE))
-    forest.add(treeFactory.getTree(TreeType.SPRUCE))
-    forest.add(treeFactory.getTree(TreeType.OAK))
-
-    forest.forEach{
-        it.plant(
-            (0..100).random(),
-            (0..100).random())
+private fun makeForest(): List<Tree> = TreeFactory().run {
+    mutableListOf<Tree>().apply {
+        add(getTree(TreeType.OAK))
+        add(getTree(TreeType.PINE))
+        add(getTree(TreeType.SPRUCE))
+        add(getTree(TreeType.SPRUCE))
+        add(getTree(TreeType.OAK))
+        add(getTree(TreeType.OAK))
+        add(getTree(TreeType.PINE))
+        add(getTree(TreeType.SPRUCE))
+        add(getTree(TreeType.SPRUCE))
+        add(getTree(TreeType.OAK))
+        add(getTree(TreeType.OAK))
+        add(getTree(TreeType.PINE))
+        add(getTree(TreeType.SPRUCE))
+        add(getTree(TreeType.SPRUCE))
+        add(getTree(TreeType.OAK))
     }
 }
