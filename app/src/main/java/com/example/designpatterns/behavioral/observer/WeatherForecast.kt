@@ -5,7 +5,7 @@ package com.example.designpatterns.behavioral.observer
  */
 class WeatherForecast {
 
-    private val subscribers = mutableListOf<Person>()
+    private val subscribers = mutableSetOf<Person>()
 
     fun subscribe(person: Person) {
         subscribers.add(person)
