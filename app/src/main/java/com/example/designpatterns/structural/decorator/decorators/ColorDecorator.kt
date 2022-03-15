@@ -8,7 +8,11 @@ import com.example.designpatterns.structural.decorator.shapes.Shape
 class ColorDecorator(shape: Shape) : Decorator(shape) {
 
     override fun draw() {
-        super.draw()
+        shape.draw()
+        floodFill()
+    }
+
+    private fun floodFill() {
         println("Закрашен каким-то цветом")
     }
 }
