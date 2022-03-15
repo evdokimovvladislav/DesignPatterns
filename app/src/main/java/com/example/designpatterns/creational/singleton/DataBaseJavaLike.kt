@@ -8,11 +8,19 @@ class DataBaseJavaLike private constructor() {
     companion object {
 
         private var db: DataBaseJavaLike? = null
+        private val LOCK = Any()
 
         fun getInstance(): DataBaseJavaLike {
-            if (db == null)
+            db?.let {
+                return it
+            }
+            synchronized(LOCK) {
+                db?.let {
+                    return it
+                }
                 db = DataBaseJavaLike()
-            return db as DataBaseJavaLike
+                return db as DataBaseJavaLike
+            }
         }
     }
 }
