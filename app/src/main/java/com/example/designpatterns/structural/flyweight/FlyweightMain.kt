@@ -11,8 +11,8 @@ import com.example.designpatterns.structural.flyweight.trees.Tree
 fun main() {
     val forest = makeForest()
 
-    val planter = TreePlanter(forest, -1 to 2, 0 to 2)
-    planter.plant()
+    val planter = TreePlanter()
+    planter.plant(forest, -1 to 2, 0 to 2)
 }
 
 private fun makeForest(): List<Tree> = TreeFactory().run {

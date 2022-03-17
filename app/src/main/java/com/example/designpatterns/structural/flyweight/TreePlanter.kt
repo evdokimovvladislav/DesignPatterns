@@ -4,30 +4,37 @@ import com.example.designpatterns.structural.flyweight.trees.Tree
 
 /**
  * Класс для посадки деревьев
- *
- * @property treeList лист деревьев для посадки
- * @property xRange пара минимальное значение - максимальное значение координат по оси X
- * @property yRange пара минимальное значение - максимальное значение координат по оси Y
  */
-class TreePlanter(
-    private val treeList: List<Tree>,
-    private val xRange: Pair<Int, Int>,
-    private val yRange: Pair<Int, Int>
-) {
+class TreePlanter {
+
+    private var xMin: Int = DEFAULT_VALUE
+    private var xMax: Int = DEFAULT_VALUE
+    private var yMin: Int = DEFAULT_VALUE
+    private var yMax: Int = DEFAULT_VALUE
+
     private val coordinates = mutableSetOf<Pair<Int, Int>>()
     private var count = coordinates.size
 
-    init {
-        if (xRange.first > xRange.second || yRange.first > yRange.second)
-            throw RuntimeException("Минимальное значение координат не должно превышать максимальное")
-    }
-
     /**
-     * Посадить все деревья из листа, переданного в конструктор класса.
+     * Посадить все деревья из листа деревьев.
      * Если свободного места нет, то выведет в консоль сообщение об этом
      * для каждого оставшегося дерева.
+     * Если минимальное значение координат превышает максимальное, то выбрасывает исключение
+     * RuntimeException("Минимальное значение координат не должно превышать максимальное")
+     *
+     * @param treeList лист деревьев для посадки
+     * @param xRange пара минимальное значение - максимальное значение координат по оси X
+     * @param yRange пара минимальное значение - максимальное значение координат по оси Y
      */
-    fun plant() {
+    fun plant(treeList: List<Tree>, xRange: Pair<Int, Int>, yRange: Pair<Int, Int>) {
+        if (xRange.first > xRange.second || yRange.first > yRange.second)
+            throw RuntimeException("Минимальное значение координат не должно превышать максимальное")
+
+        xMin = xRange.first
+        xMax = xRange.second
+        yMin = yRange.first
+        yMax = yRange.second
+
         treeList.forEach {
             plantTree(it)
         }
@@ -38,8 +45,8 @@ class TreePlanter(
             println("Больше нет свободного места")
             return
         }
-        val x = (xRange.first..xRange.second).random()
-        val y = (yRange.first..yRange.second).random()
+        val x = (xMin..xMax).random()
+        val y = (yMin..yMax).random()
         val pair = x to y
         coordinates.add(pair)
         if (coordinates.size == count) {
@@ -51,6 +58,9 @@ class TreePlanter(
     }
 
     private fun checkSize() =
-        coordinates.size ==
-                (xRange.first..xRange.second).count() * (yRange.first..yRange.second).count()
+        coordinates.size == (xMin..xMax).count() * (yMin..yMax).count()
+
+    private companion object {
+        const val DEFAULT_VALUE = 0
+    }
 }
