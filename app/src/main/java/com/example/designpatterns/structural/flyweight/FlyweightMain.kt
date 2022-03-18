@@ -12,7 +12,7 @@ fun main() {
     val forest = makeForest()
 
     val planter = TreePlanter()
-    planter.plant(forest, -1 to 2, 0 to 2)
+    planter.plant(forest, 0 to 20, 0 to 2)
 }
 
 private fun makeForest(): List<Tree> = TreeFactory().run {

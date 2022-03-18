@@ -7,14 +7,6 @@ import com.example.designpatterns.structural.flyweight.trees.Tree
  */
 class TreePlanter {
 
-    private var xMin: Int = DEFAULT_VALUE
-    private var xMax: Int = DEFAULT_VALUE
-    private var yMin: Int = DEFAULT_VALUE
-    private var yMax: Int = DEFAULT_VALUE
-
-    private val coordinates = mutableSetOf<Pair<Int, Int>>()
-    private var count = coordinates.size
-
     /**
      * Посадить все деревья из листа деревьев.
      * Если свободного места нет, то выведет в консоль сообщение об этом
@@ -26,41 +18,40 @@ class TreePlanter {
      * @param xRange пара минимальное значение - максимальное значение координат по оси X
      * @param yRange пара минимальное значение - максимальное значение координат по оси Y
      */
-    fun plant(treeList: List<Tree>, xRange: Pair<Int, Int>, yRange: Pair<Int, Int>) {
+    fun plant(treeList: List<Tree>, xRange: Pair<Int, Int>, yRange: Pair<Int, Int>): Boolean {
+        checkRangeOrientation(xRange, yRange)
+        checkPossibilityOfAlg(treeList.size, xRange, yRange)
+        return plantTrees(treeList, xRange, yRange)
+    }
+
+    private fun checkRangeOrientation(xRange: Pair<Int, Int>, yRange: Pair<Int, Int>) {
         if (xRange.first > xRange.second || yRange.first > yRange.second)
-            throw RuntimeException("Минимальное значение координат не должно превышать максимальное")
-
-        xMin = xRange.first
-        xMax = xRange.second
-        yMin = yRange.first
-        yMax = yRange.second
-
-        treeList.forEach {
-            plantTree(it)
-        }
+            throw IllegalArgumentException("Минимальное значение координат не должно превышать максимальное")
     }
 
-    private fun plantTree(tree: Tree) {
-        if (checkSize()) {
-            println("Больше нет свободного места")
-            return
-        }
-        val x = (xMin..xMax).random()
-        val y = (yMin..yMax).random()
-        val pair = x to y
-        coordinates.add(pair)
-        if (coordinates.size == count) {
-            plantTree(tree)
-        } else {
-            count++
-            tree.plant(x, y)
-        }
+    private fun checkPossibilityOfAlg(size: Int, xRange: Pair<Int, Int>, yRange: Pair<Int, Int>) {
+        if (size > (xRange.first..xRange.second).count() * (yRange.first..yRange.second).count())
+            throw IllegalArgumentException("Размер массива больше возможного лимита посадки")
     }
 
-    private fun checkSize() =
-        coordinates.size == (xMin..xMax).count() * (yMin..yMax).count()
+    private fun plantTrees(
+        treeList: List<Tree>,
+        xRange: Pair<Int, Int>,
+        yRange: Pair<Int, Int>
+    ): Boolean {
+        val freeSlots = mutableSetOf<Pair<Int, Int>>()
+        (xRange.first..xRange.second).forEach { x ->
+            (yRange.first..yRange.second).forEach { y ->
+                freeSlots.add(x to y)
+            }
+        }
 
-    private companion object {
-        const val DEFAULT_VALUE = 0
+        treeList.forEach { tree ->
+            freeSlots.random().also { pair ->
+                tree.plant(pair.first, pair.second)
+                freeSlots.remove(pair)
+            }
+        }
+        return true
     }
 }
