@@ -9,12 +9,13 @@ import com.example.designpatterns.structural.decorator.shapes.Shape
  *
  * Позволяет добавлять объектам новую функциональность, не изменяя родительский объект.
  */
-fun main(){
+fun main() {
 
-    var circle: Shape = Circle()
-    circle.draw()
+    val circle1: Shape = Circle()
+    circle1.draw()
     println()
 
-    circle = ColorDecorator(circle)
-    circle.draw()
+    val circle2 = ColorDecorator(circle1)
+    circle2.draw()
+    circle2.floodFill()
 }

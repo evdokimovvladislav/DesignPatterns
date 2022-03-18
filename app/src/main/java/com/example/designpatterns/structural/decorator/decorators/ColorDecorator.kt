@@ -9,10 +9,9 @@ class ColorDecorator(shape: Shape) : Decorator(shape) {
 
     override fun draw() {
         shape.draw()
-        floodFill()
     }
 
-    private fun floodFill() {
+    fun floodFill() {
         println("Закрашен каким-то цветом")
     }
 }
